@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "trendtracker-frontend": {
+    "earningcall-frontend": {
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
@@ -12,7 +12,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/trendtracker-frontend",
+            "outputPath": "dist/earningcall-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -43,14 +43,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "trendtracker-frontend:build"
+            "buildTarget": "earningcall-frontend:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "trendtracker-frontend:build:production"
+              "buildTarget": "earningcall-frontend:build:production"
             },
             "development": {
-              "buildTarget": "trendtracker-frontend:build:development"
+              "buildTarget": "earningcall-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

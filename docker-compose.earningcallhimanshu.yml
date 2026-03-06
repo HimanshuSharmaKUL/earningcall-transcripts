@@ -1,13 +1,13 @@
-name: trendtracker_himanshu
+name: earning-call-tracker-himanshu
 services:
   postgres:
     image: pgvector/pgvector:pg17 #postgres:17
-    container_name: trendtracker-postgres
+    container_name: earning-call-tracker-himanshu-postgres
     restart: always
     environment:
       POSTGRES_USER: postgres      # dev-only
       POSTGRES_PASSWORD: postgres   # dev-only
-      POSTGRES_DB: trendtracker_db
+      POSTGRES_DB: earning_call_db
     ports:
       - "5433:5432" # local port 5433 'cause I had a local pgsql running'
     volumes:
@@ -15,7 +15,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: trendtracker-pgadmin
+    container_name: earning-call-tracker-himanshu-pgadmin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com

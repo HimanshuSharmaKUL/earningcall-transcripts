@@ -36,7 +36,7 @@ def _chunk_hash(transcript_id: str, chunk_index: int, text: str) -> str:
     payload = f"{transcript_id}:{chunk_index}:{text}".encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
 
-_CHUNK_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_DNS, "trendtrackerHimanshu.transcript_chunk")
+_CHUNK_NAMESPACE = uuid.uuid5(uuid.NAMESPACE_DNS, "earningcallHimanshu.transcript_chunk")
 def _chunk_id_from_hash(hash_value: str) -> uuid.UUID:
     return uuid.uuid5(_CHUNK_NAMESPACE, hash_value)
 

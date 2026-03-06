@@ -7,11 +7,11 @@ from typing import List, Optional
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 
-env_path = Path(__file__).resolve().parents[2] / ".env.secret" #C:\F Drive\KU Leuven\TrendTracker\trendtracker-earningcall-transcripts\.env
+env_path = Path(__file__).resolve().parents[2] / ".env.secret" 
 load_dotenv(dotenv_path=env_path)
 
 class Settings(BaseSettings):
-    APP_NAME: str = os.environ.get("APP_NAME", "TrendTracker-Himanshu")
+    APP_NAME: str = os.environ.get("APP_NAME", "Earning-Call-Tracker-Himanshu")
 
     DB_USER: str  
     DB_PASSWORD: str  

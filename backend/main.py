@@ -23,7 +23,7 @@ origins = [o.rstrip("/") for o in origins]
 
 
 def create_application():
-    application = FastAPI(title="Trendtracker:Himanshu")
+    application = FastAPI(title="Earning-Call-Tracker:Himanshu")
 
     application.add_middleware(
         CORSMiddleware,

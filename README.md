@@ -1,24 +1,24 @@
-# TrendTracker Coding Assignment: Earnings Call Transcripts RAG based Q&A
+# Earnings Call Transcripts RAG based Q&A
 
-This repo is my submition towards TrendTracker coding assignment where my task was to make a web app for financial transcript ingestion, search them, and RAG-based Q&A with the stored transcripts. I implemented the web-app using FastAPI, PostgreSQL, and a simple Angular UI frontend. - Himanshu Sharma
+This repo is a web app for financial transcript ingestion, search them, and RAG-based Q&A with the stored transcripts. I implemented the web-app using FastAPI, PostgreSQL, and a simple Angular UI frontend. - Himanshu Sharma
 
 ## Engineering Choices:
+
 I made some engineering choices which involved tradeoffs between speed, accuracy or between ease of implementation and important but complex to implement
+
 1. I used transformer based spaCy model `en_core_web_trf` for NLP preprocessing
-    - It is a heavy model which is expensive to load but it gives good Named-Entity Recognition
-    - To manage its expensive loading, I only load it locally when preprocessing of transcripts is being done and not globally.
+   - It is a heavy model which is expensive to load but it gives good Named-Entity Recognition
+   - To manage its expensive loading, I only load it locally when preprocessing of transcripts is being done and not globally.
 
 2. I ensured uniqueness of the chunks
-
-    - Avoiding chunk duplication was challanging.
-    - There were some common chunks like 'Thank you for the call...', or 'Thank you for being present..' etc. which usually came in the first position of the paragraph chunks and were genrating UUID conflict. So to manage it, I adopted several deduplication tricks:
-        - I made a globally unique chunk hash using its parent transcript_id, its local index and its text,
-        - I used Upserting - where I checked if the row exists for a given unique combination of `transcript_id` and `chunk_id` in the TranscriptChunk table.
-        - Then I also did deduplication of the chunks and tried to fill only the unseen chunks.
+   - Avoiding chunk duplication was challanging.
+   - There were some common chunks like 'Thank you for the call...', or 'Thank you for being present..' etc. which usually came in the first position of the paragraph chunks and were genrating UUID conflict. So to manage it, I adopted several deduplication tricks:
+     - I made a globally unique chunk hash using its parent transcript_id, its local index and its text,
+     - I used Upserting - where I checked if the row exists for a given unique combination of `transcript_id` and `chunk_id` in the TranscriptChunk table.
+     - Then I also did deduplication of the chunks and tried to fill only the unseen chunks.
 
 3. I'm using 4-bit quantised model`gemma3:4b-it-q4_K_M`:
-
-      - To generate augmented answers locally on my laptop, I used a light weight but accurate 4-bit quantised version of gemma3:4b, which which significantly reduces the VRAM requirement in GPU.
+   - To generate augmented answers locally on my laptop, I used a light weight but accurate 4-bit quantised version of gemma3:4b, which which significantly reduces the VRAM requirement in GPU.
 
 4. I'm trying to send less UUIDs to frontend from backend responsees because frontend can not do anything with them apart from making another backend calls
 
@@ -93,11 +93,15 @@ Single-page Angular console (`frontend/src/app/*`) with:
 ## How to Run Locally
 
 ### 1) Start PostgreSQL and alembic migrations
+
 From the root do
+
 ```bash
-docker compose -f docker-compose.trendtrackerhimanshu.yml up -d
+docker compose -f docker-compose.earningcallhimanshu.yml up -d
 ```
+
 Then run alembic migrations
+
 ```bash
 alembic upgrade head
 ```
@@ -113,9 +117,7 @@ Copy the template ` .env.example` and fill in secrets:
 We must set:
 
 - `OPENFIGI_API_KEY` for ticker resolution. This API Key is free to obtain. As OpenFIGI is an oopen standard unique identifier of financial instruments.
-- `LLM_PROVIDER` and corresponding OpenAI and Ollama settings
-        - If you have OpenAI, then use its keys
-        - TO use Ollama, you'll need to download Ollama (https://ollama.com/download) and then select the model of your choice. I selected a small 4B model.
+- `LLM_PROVIDER` and corresponding OpenAI and Ollama settings - If you have OpenAI, then use its keys - TO use Ollama, you'll need to download Ollama (https://ollama.com/download) and then select the model of your choice. I selected a small 4B model.
 - `CORS_ORIGINS` to include the frontend URL
 
 ### 3) Backend
@@ -131,7 +133,9 @@ We must set:
   ```
 
 ### 4) Frontend
+
 To run the frontend
+
 ```
 cd frontend
 npm install
@@ -139,7 +143,9 @@ npm start
 ```
 
 ### 5) Run Tests
+
 To run tests
+
 - First run the test database: `docker compose -f docker-compose.test.yml up -d`
 - Run alembic migrations: `alembic upgrade head`
 - Then run from root: `pytest`

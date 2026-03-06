@@ -12,10 +12,10 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)  # ensure backend package imports resolve
 
 _DEFAULT_ENV = {
-    "APP_NAME": "TrendTracker-Test",
+    "APP_NAME": "EarningCall-Test",
     "DB_USER": "postgres_test",
     "DB_PASSWORD": "postgrestest_pw",
-    "DB_NAME": "trendtracker_db_test",
+    "DB_NAME": "earning_call_db_test",
     "DB_HOST": "localhost",
     "DB_PORT": "5434", # local port 5434 for test, 5433 for dev, 5432 previous local installation
     "CORS_ORIGINS": "http://localhost",
